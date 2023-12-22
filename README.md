@@ -8,7 +8,8 @@ This repository contains the code to run an ETL Pipeline to fetch weather data f
 * Extract.py, Load.py, Transform.py - Modules of the ETL pipeline
 * ETL_Logger.py - File that handles the logging part of the pipeline
 * ETL_Logs.log - Contains the log output from the pipeline
-* Unit_Testing.py - Testing file 
+* Unit_Testing.py - Testing file
+* Weather_Data_Sample.db - Sample DB file to show how the created Weather_Data.db file should look like after successful running of the pipeline.
 
 ## Steps to run the file -
 * Run the main ETL_Pipeline file. This imports the Extract, Transform and Load modules written in separate files to manage the readability and reusability of the code.
