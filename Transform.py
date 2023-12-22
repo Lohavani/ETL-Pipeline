@@ -1,5 +1,5 @@
 import pandas as pd
-import File_Logger
+import ETL_Logger
 
 def kelvin_to_celsius(extracted_data):
     if isinstance(extracted_data, pd.DataFrame) :
@@ -9,13 +9,14 @@ def kelvin_to_celsius(extracted_data):
 
 def transform_weather_data(extracted_data):
     # Check for data anomalies
+    # Data Validation
     print("\nChecking the extracted data information - ")
     extracted_data.info()
     print("\n\nChecking if extracted data has N/A values - ")
     print(extracted_data.isna().sum())
     print("\n\nDescribing the extracted data - ")
     print(extracted_data.describe())
-    # Since there are no null values, there is no handling required. 
+    # Since there are no null values as can be seen in the output, there is no handling required. 
 
     # Convert timestamp to time and date in standard format
     extracted_data['Timestamp'] = pd.to_datetime(extracted_data['Timestamp'], unit='s')
@@ -33,7 +34,6 @@ def transform_weather_data(extracted_data):
     # Round the 'Daily Average Temperature' column to 2 decimal places
     extracted_data['Daily Average Temperature'] = extracted_data['Daily Average Temperature'].round(2)
 
-    File_Logger.log("Info", "Transform process completed successfully.")
-    #print(extracted_data.head)
+    ETL_Logger.log("Info", "Transform process completed successfully.")
 
     return extracted_data

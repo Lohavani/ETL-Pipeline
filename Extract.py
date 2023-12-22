@@ -2,7 +2,7 @@ import pandas as pd
 from urllib.request import urlopen
 from urllib.error import HTTPError, URLError
 import json
-import File_Logger
+import ETL_Logger
 
 def extract_weather_data(params):
     API_Key = params['API_Key']
@@ -10,7 +10,7 @@ def extract_weather_data(params):
     
     try: 
         # using urllib library as requests library had ssl error
-        # using predefined list of cities from config file
+        # Using predefined list of cities from config file
         for city in params['cities'] :
             url = f'http://api.openweathermap.org/data/2.5/forecast?q={city}&appid={API_Key}'  
             response = urlopen(url)
@@ -18,7 +18,7 @@ def extract_weather_data(params):
 
             data = json.loads(body)
 
-            # looping through index from 0 to number of timestamps returned per city (default 5 days and 3 hour intervals, so cnt = 40) 
+            # Looping through index from 0 to number of timestamps returned per city (default 5 days and 3 hour intervals, so cnt = 40) 
             index = 0
             for index in range(0,data['cnt']): 
                 dict_temp = {
@@ -33,16 +33,16 @@ def extract_weather_data(params):
                     'Description': data['list'][index]['weather'][0]['description']
                     }
                 
-                # converting dictionary object to dataframe and appending each city's data to final dataframe
+                # Converting dictionary object to dataframe and appending each city's data to final dataframe
                 df_temp = pd.DataFrame([dict_temp])
                 df_weather = pd.concat([df_weather, df_temp])
 
-        File_Logger.log("Info", "Extract process completed successfully.")
+        ETL_Logger.log("Info", "Extract process completed successfully.")
                     
     except HTTPError as e:
-        File_Logger.log("Error", f"Exception HTTPError : {e.code} {e.reason}")
+        ETL_Logger.log("Error", f"Exception HTTPError : {e.code} {e.reason}")
 
     except URLError as e:
-        File_Logger.log("Error", f"Exception URLError : {e.reason}")
+        ETL_Logger.log("Error", f"Exception URLError : {e.reason}")
 
     return df_weather
