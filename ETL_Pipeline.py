@@ -20,4 +20,5 @@ def main():
     else:
         ETL_Logger.log("Error", "No data returned from Extract process")
 
-main()
+if __name__ == '__main__':
+    main()
