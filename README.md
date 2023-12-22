@@ -21,5 +21,5 @@ This repository contains the code to run an ETL Pipeline to fetch weather data f
 * Python 3 version should be installed on the system.
 * Visual Studio code to view the code and make changes.
 * Libraries used by the code - pandas, json, unittest, urllib, sqlite3. If these are not present, run the pip command to install these libraries.
-  pip install "dependency-name"
+** pip install <dependency-name>
 * To view the SQLite DB, install the SQLite Viewer Extension in Visual Studio Code.
