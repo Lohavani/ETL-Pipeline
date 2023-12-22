@@ -7,7 +7,7 @@ This repository contains the code to run an ETL Pipeline to fetch weather data f
 * After the ETL Pipeline is run, the terminal shows data validation output from the Transform module. Upon successfully running the pipeline, the terminal shows output that the process has been completed.
 * The ETL_Logs file contains the logs from each module and can be analyzed for monitoring and performance metrics.
 * After the ERTL pipeline has run, a Weather_Data DB file will be created in the same folder as the codebase. This file can be opened using SQLite Viewer to see the table. It should have 9 columns and 200 records for a single run of this pipeline.
-* Testing - The Unit_Testing file should be run separately to check the temperature conversion function which is part of the Transform module. The terminal output shows OK when the tests have been run successfully.
+* Testing - The Unit_Testing file should be run separately to check the temperature conversion function which is part of the Transform module. The terminal output shows OK when the tests have been run successfully. If there is any error, it will be shown in the terminal output. 
 
 ## Dependencies required -
 * Python 3 version should be installed on the system.
