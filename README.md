@@ -3,7 +3,7 @@
 This repository contains the code to run an ETL Pipeline to fetch weather data from OpenWeatherMap API, process it, and load it to an SQLite database. 
 
 ## Repository structure -
-* ETL Pipeline.py - Main file to run the ETL process
+* ETL_Pipeline.py - Main file to run the ETL process
 * ETL_Params.json - Contains the parameters required and sensitive data
 * Extract.py, Load.py, Transform.py - Modules of the ETL pipeline
 * ETL_Logger.py - File that handles the logging part of the pipeline
