@@ -1,39 +1,43 @@
 import sqlite3
-import Logs
+import File_Logger
 
 def load_weather_data(transformed_data):
     try:
         # Create connection to SQLite DB
-        conn = sqlite3.connect('C:\\Users\\lose3\\OneDrive - NHS\\Python codes\\ETL\\Weather_Data.db')
+        conn = sqlite3.connect('Weather_Data.db')
         cursor = conn.cursor()
-        print("Hii")
+        #print("Hii")
+
+        transformed_data['Timestamp'] = transformed_data['Timestamp'].astype(str)
 
         # Create Weather Table if not present with the specified columns and data types
         cursor.execute('''CREATE TABLE IF NOT EXISTS Weather (
                             City TEXT,
-                            Population REAL,
+                            Population INTEGER,
                             Latitude REAL, 
                             Longitude REAL,
-                            Timestamp INTEGER,
-                            Temperature (Celsius) REAL,
+                            Timestamp TEXT,
+                            "Temperature (Celsius)" REAL,
                             Humidity INTEGER,
                             WindSpeed REAL,
+                            "Daily Average Temperature" REAL,
                             Description TEXT
                         )''')
-        print("Hello")
-
+        #print("Hello")
+        #print(transformed_data.head)
         # Iterate over rows and write data to Weather table
-        for row in transformed_data:
-            print(row['City'])
+        for index, row in transformed_data.iterrows():
+            # print(row['City'])
             cursor.execute('''INSERT INTO Weather
-                            VALUES (?, ?, ?, ?, ?)''',
-                            (row['City'], row['Population'], row['Latitude'], row['Longitude'], row['Temperature (Celsius)'], row['Timestamp'], 
-                            row['Humidity (%)'], row['Wind Speed (m/s)'], row['Description']))
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+                            (row['City'], row['Population'], row['Latitude'], row['Longitude'], row['Timestamp'], 
+                             row['Temperature (Celsius)'], row['Humidity (%)'], row['Wind Speed (m/s)'], 
+                             row['Daily Average Temperature'], row['Description']))
 
         conn.commit()
         conn.close()
-        print("Successful")
-        Logs.log("Info", "Data loaded to the database successfully.")
+        #print("Successful")
+        File_Logger.log("Info", "Data loaded to the database successfully.")
 
     except sqlite3.Error as e:
-        Logs.log("Error", f"SQLite error occurred: {e}")
+        File_Logger.log("Error", f"SQLite error occurred: {e}")

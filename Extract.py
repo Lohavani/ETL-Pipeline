@@ -2,7 +2,7 @@ import pandas as pd
 from urllib.request import urlopen
 from urllib.error import HTTPError, URLError
 import json
-import Logs
+import File_Logger
 
 def extract_weather_data(params):
     API_Key = params['API_Key']
@@ -18,14 +18,14 @@ def extract_weather_data(params):
 
             data = json.loads(body)
 
-            # looping through index from 0 to 7 as the API returns 3 hour entries per day for a city, i.e. 8 entries per day
+            # looping through index from 0 to number of timestamps returned per city (default 5 days and 3 hour intervals, so cnt = 40) 
             index = 0
-            for index in range(0,7): 
+            for index in range(0,data['cnt']): 
                 dict_temp = {
                     'City': city,
-                    'Population' : data['city']['coord']['lat'],
-                    'Latitude' : data['city']['coord']['lon'],
-                    'Longitude' : data['city']['population'],
+                    'Population' : data['city']['population'],
+                    'Latitude' : data['city']['coord']['lat'],
+                    'Longitude' : data['city']['coord']['lon'],
                     'Timestamp' : data['list'][index]['dt'],
                     'Temperature (Kelvin)': data['list'][index]['main']['temp'],
                     'Humidity (%)': data['list'][index]['main']['humidity'],
@@ -37,12 +37,12 @@ def extract_weather_data(params):
                 df_temp = pd.DataFrame([dict_temp])
                 df_weather = pd.concat([df_weather, df_temp])
 
-        Logs.log("Info", "Extract process completed successfully.")
+        File_Logger.log("Info", "Extract process completed successfully.")
                     
     except HTTPError as e:
-        Logs.log("Error", f"Exception HTTPError : {e.code} {e.reason}")
+        File_Logger.log("Error", f"Exception HTTPError : {e.code} {e.reason}")
 
     except URLError as e:
-        Logs.log("Error", f"Exception URLError : {e.reason}")
+        File_Logger.log("Error", f"Exception URLError : {e.reason}")
 
     return df_weather
