@@ -1,8 +1,8 @@
 import json
-import Extract
-import Transform
-import Load
-import ETL_Logger
+import Extract.extract_process as Extract
+import Transform.transform_process as Transform
+import Load.load_process as Load
+import Logs.ETL_Logger as ETL_Logger
 
 # Reading config file
 # Config file used to handle sensitive data and predefined parameters
